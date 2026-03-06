@@ -1,28 +1,27 @@
 public class Main {
+    public static boolean isPalindrome(String input) {
+        if (input == null) return false;
 
-    public static void main(String[] args) {
-        String word = "RACECAR";
-        // Normalize the string: lowercase and remove non-alphanumeric if needed
-        boolean result = isPalindrome(word.toLowerCase());
 
-        System.out.println("Is '" + word + "' a palindrome? " + result);
+        String cleanString = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+
+
+
+        int left = 0;
+        int right = cleanString.length() - 1;
+
+        while (left < right) {
+            if (cleanString.charAt(left) != cleanString.charAt(right)) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;
     }
 
-
-    public static boolean isPalindrome(String s) {
-        // 1. Base Condition: If the string is empty or has one char, it's a palindrome
-        if (s.length() <= 1) {
-            return true;
-        }
-
-        // 2. Compare the first and last characters
-        if (s.charAt(0) == s.charAt(s.length() - 1)) {
-            // 3. Recursive Call: Slice the string and move inward
-            // substring(start, end) is inclusive of start, exclusive of end
-            return isPalindrome(s.substring(1, s.length() - 1));
-        }
-
-        // If characters don't match, it's not a palindrome
-        return false;
+    public static void main(String[] args) {
+        String test = "A man, a plan, a canal: Panama";
+        System.out.println("Is Palindrome: " + isPalindrome(test)); // Output: true
     }
 }
