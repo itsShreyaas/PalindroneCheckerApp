@@ -1,27 +1,47 @@
-public class Main {
-    public static boolean isPalindrome(String input) {
+import java.util.Stack;
+
+/**
+ * UC11: PalindromeChecker
+ * Demonstrates Encapsulation and Single Responsibility.
+ */
+public class PalindromeChecker {
+
+    /**
+     * Checks if a given string is a palindrome.
+     * Logic: Uses a Stack to reverse the string and compare.
+     * * @param input The string to check
+     * @return true if palindrome, false otherwise
+     */
+    public boolean checkPalindrome(String input) {
         if (input == null) return false;
 
+        // Clean the input: remove non-alphanumeric and convert to lowercase
+        String cleaned = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
 
-        String cleanString = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+        Stack<Character> stack = new Stack<>();
 
-
-
-        int left = 0;
-        int right = cleanString.length() - 1;
-
-        while (left < right) {
-            if (cleanString.charAt(left) != cleanString.charAt(right)) {
-                return false;
-            }
-            left++;
-            right--;
+        // Push all characters onto the stack
+        for (char c : cleaned.toCharArray()) {
+            stack.push(c);
         }
-        return true;
+
+        // Build the reversed string by popping from the stack
+        StringBuilder reversed = new StringBuilder();
+        while (!stack.isEmpty()) {
+            reversed.append(stack.pop());
+        }
+
+        return cleaned.equals(reversed.toString());
     }
 
     public static void main(String[] args) {
-        String test = "A man, a plan, a canal: Panama";
-        System.out.println("Is Palindrome: " + isPalindrome(test)); // Output: true
+        PalindromeChecker service = new PalindromeChecker();
+
+        // Test Cases
+        String test1 = "Racecar";
+        String test2 = "Hello";
+
+        System.out.println("Is '" + test1 + "' a palindrome? " + service.checkPalindrome(test1));
+        System.out.println("Is '" + test2 + "' a palindrome? " + service.checkPalindrome(test2));
     }
 }
